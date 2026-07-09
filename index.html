@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Credencial Digital</title>
-    <!-- Librería para generar los QR limpios desde el Base64 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
         body {
@@ -22,27 +21,43 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             box-sizing: border-box;
         }
-        /* DISEÑO: Logo al lado del nombre de la empresa */
+        /* DISEÑO BASE: Horizontal (Para usuario 0 y otros con logos cuadrados) */
         .company-header {
             display: flex;
             align-items: center;
             gap: 12px;
             margin-bottom: 30px;
         }
+        /* DISEÑO EXCLUSIVO USER 500: Vertical/Stacked */
+        .company-header.stacked {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
         .logo-empresa {
-            height: 28px;
+            height: 26px;
             max-width: 110px;
             object-fit: contain;
             background-color: white;
             padding: 3px 6px;
             border-radius: 4px;
         }
+        /* MODIFICACIÓN: Logo transparente y sin recuadro blanco para el usuario 500 */
+        .logo-empresa.rectangular {
+            height: 38px;
+            max-width: 180px;
+            width: auto;
+            background-color: transparent; /* Remueve el fondo blanco */
+            padding: 0; /* Remueve el recuadro interno */
+            border-radius: 0;
+        }
         .company-name {
             font-size: 19px;
             font-weight: bold;
             letter-spacing: 0.3px;
         }
-        /* DISEÑO: Datos a la izquierda y foto de perfil a la derecha */
+        /* Datos a la izquierda y foto de perfil a la derecha */
         .user-row {
             display: flex;
             justify-content: space-between;
@@ -111,7 +126,6 @@
             fetch('usuarios.json')
                 .then(response => response.json())
                 .then(usuarios => {
-                    // Buscar al usuario por ID convertido a texto
                     const usuario = usuarios.find(u => u.id.toString() === userId);
 
                     if (!usuario) {
@@ -119,21 +133,32 @@
                         return;
                     }
 
-                    // Definir si se renderiza una etiqueta de imagen o un lienzo canvas para el QR
-                    let qrElementHTML = usuario.usar_foto_qr 
-                        ? `<img src="${usuario.qr_pure}" alt="Código QR">` 
-                        : `<canvas id="qr"></canvas>`;
-
-                    // Renderizar la plantilla con los nuevos campos del JSON
-                    document.getElementById('app').innerHTML = `
-                        <div class="card">
-                            <!-- Cabecera: Logo + Nombre de Empresa -->
+                    // Cabecera Dinámica
+                    let cabeceraHTML = '';
+                    if (usuario.id.toString() === '500') {
+                        cabeceraHTML = `
+                            <div class="company-header stacked">
+                                <img class="logo-empresa rectangular" src="${usuario.logo}" alt="Logo">
+                                <div class="company-name">Estudio Hernández</div>
+                            </div>
+                        `;
+                    } else {
+                        cabeceraHTML = `
                             <div class="company-header">
                                 <img class="logo-empresa" src="${usuario.logo}" alt="Logo">
                                 <div class="company-name">Estudio Hernández</div>
                             </div>
+                        `;
+                    }
+
+                    let qrElementHTML = usuario.usar_foto_qr 
+                        ? `<img src="${usuario.qr_pure}" alt="Código QR">` 
+                        : `<canvas id="qr"></canvas>`;
+
+                    document.getElementById('app').innerHTML = `
+                        <div class="card">
+                            ${cabeceraHTML}
                             
-                            <!-- Bloque del Empleado: Cargo y Nombre a la izquierda, Foto a la derecha -->
                             <div class="user-row">
                                 <div class="user-info">
                                     <div class="cargo">${usuario.rol} ${usuario.areas_practica.length ? `• ${usuario.areas_practica.join(', ')}` : ''}</div>
@@ -142,20 +167,17 @@
                                 <img class="profile-pic" src="${usuario.foto}" alt="Perfil">
                             </div>
                             
-                            <!-- Información de Contacto -->
                             <div class="info-group">
                                 <div class="label">EMAIL</div>
                                 <div class="info-value">${usuario.email}</div>
                             </div>
                             
-                            <!-- Código QR de Acceso Suprema -->
                             <div class="qr-container">
                                 ${qrElementHTML}
                             </div>
                         </div>
                     `;
 
-                    // Si no es una foto fija, la librería genera el QR limpio basándose en el texto puro
                     if (!usuario.usar_foto_qr) {
                         new QRious({
                             element: document.getElementById('qr'),
