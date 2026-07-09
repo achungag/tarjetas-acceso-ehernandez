@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Credencial Digital</title>
+    <!-- Librería para generar los QR limpios desde el Base64 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
         body {
@@ -34,7 +35,7 @@
             background-color: white; padding: 3px 6px; border-radius: 4px;
         }
 
-        /* 2. LAYOUT COMPACTO: Centrado Interno (ID 500 y 502) - Sin espacios vacíos */
+        /* 2. LAYOUT COMPACTO: Centrado Interno (ID 500) - Sin espacios vacíos */
         .company-header.centrado-interno {
             display: flex; flex-direction: column; align-items: center;
             gap: 6px; 
@@ -51,7 +52,7 @@
         .logo-fuera {
             width: 85%; max-width: 250px; height: auto;
             object-fit: contain; 
-            margin-bottom: 20px; /* Separación estética antes de que empiece la tarjeta verde */
+            margin-bottom: 20px; /* Separación estética antes de la tarjeta */
         }
         
         /* Estilos comunes */
@@ -104,7 +105,7 @@
                     let cabeceraHTML = '';
                     let logoFueraHTML = '';
 
-                    // Lógica de ruteo limpia para las ubicaciones físicas del logo
+                    // Lógica de ruteo para las ubicaciones físicas del logo
                     if (usuario.layout === 'por-fuera') {
                         // ID 501: El logo original se pinta AFUERA y ARRIBA de la tarjeta verde
                         logoFueraHTML = `<img class="logo-fuera" src="${usuario.logo}" alt="Logo">`;
@@ -114,7 +115,7 @@
                             </div>
                         `;
                     } else if (usuario.layout === 'centrado-interno') {
-                        // ID 500 y 502: Logo original adentro, centrado y sin espacios gigantes
+                        // ID 500: Logo original adentro, centrado y compacto
                         cabeceraHTML = `
                             <div class="company-header centrado-interno">
                                 <img class="logo-empresa" src="${usuario.logo}" alt="Logo">
