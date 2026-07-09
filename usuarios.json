@@ -3,10 +3,11 @@
     "id": 0,
     "nombre": "Dave",
     "apellido": "Luna",
-    "rol": "IT",
-    "areas_practica": ["EJEMPLO"],
+    "rol": "SUB GERENTE",
+    "areas_practica": ["EJEMPLO-1"],
     "email": "daveluna@ehernandez.com.pe",
     "foto": "dave-perfil.jpg",
+    "logo": "logo1.png",
     "qr_pure": "QTIyMEI1OTkwNzAwMkMwMTAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDI2OTkyNUIwMDAwMDAwMDY5QUY2M0JDMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMA==",
     "usar_foto_qr": false
   },
@@ -15,10 +16,11 @@
     "nombre": "Dave",
     "apellido": "Luna",
     "rol": "IT",
-    "areas_practica": ["EJEMPLO2"],
+    "areas_practica": ["EJEMPLO-2"],
     "email": "daveluna@ehernandez.com.pe",
     "foto": "dave-perfil.jpg",
-    "qr_pure": "dave-qr.jpg",
+    "logo": "logo2.jpeg",
+    "qr_pure": "qr-galeria.jpg",
     "usar_foto_qr": true
   }
 ]
