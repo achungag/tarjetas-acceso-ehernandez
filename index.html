@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credencial Digital</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background-color: #f0f2f5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+        }
+        .card {
+            background-color: #2e7d32; color: white;
+            width: 90%; max-width: 360px;
+            border-radius: 20px; padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+        }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px; }
+        .company-name { font-size: 18px; font-weight: bold; }
+        .profile-pic { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; background-color: #fff; }
+        .label { font-size: 11px; text-transform: uppercase; color: #a5d6a7; margin-bottom: 2px; letter-spacing: 1px; }
+        .cargo { font-size: 12px; text-transform: uppercase; color: #c8e6c9; font-weight: 600; }
+        .nombre { font-size: 26px; font-weight: bold; margin: 5px 0 20px 0; }
+        .info-group { margin-bottom: 15px; }
+        .info-value { font-size: 14px; }
+        .qr-container {
+            background-color: white; padding: 15px;
+            border-radius: 15px; margin-top: 25px;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .qr-container img, .qr-container canvas { width: 220px; height: 220px; object-fit: contain; }
+        .error-msg { color: #ff5252; background: white; padding: 20px; border-radius: 10px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div id="app">Cargando credencial...</div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('user');
+
+        if (!userId) {
+            document.getElementById('app').innerHTML = '<div class="error-msg">❌ Error: Especifica un usuario en la URL (?user=0 o ?user=500)</div>';
+        } else {
+            fetch('usuarios.json')
+                .then(response => response.json())
+                .then(usuarios => {
+                    // Buscar por ID (convertido a String para comparar correctamente)
+                    const usuario = usuarios.find(u => u.id.toString() === userId);
+
+                    if (!usuario) {
+                        document.getElementById('app').innerHTML = '<div class="error-msg">❌ Usuario no encontrado.</div>';
+                        return;
+                    }
+
+                    // Preparar el contenedor del QR dependiendo de la configuración del usuario
+                    let qrElementHTML = '';
+                    if (usuario.usar_foto_qr) {
+                        // Si usa foto, cargamos la etiqueta <img> apuntando a la ruta de la imagen
+                        qrElementHTML = `<img src="${usuario.qr_pure}" alt="Código QR">`;
+                    } else {
+                        // Si usa código de texto, dejamos el <canvas> para que la librería lo dibuje
+                        qrElementHTML = `<canvas id="qr"></canvas>`;
+                    }
+
+                    document.getElementById('app').innerHTML = `
+                        <div class="card">
+                            <div class="header">
+                                <div class="company-name">Estudio Hernández</div>
+                                <img class="profile-pic" src="${usuario.foto}" alt="Foto">
+                            </div>
+                            
+                            <div class="cargo">${usuario.rol} - ${usuario.areas_practica.join(', ')}</div>
+                            <div class="nombre">${usuario.nombre} ${usuario.apellido}</div>
+                            
+                            <div class="info-group">
+                                <div class="label">EMAIL</div>
+                                <div class="info-value">${usuario.email}</div>
+                            </div>
+                            
+                            <div class="qr-container">
+                                ${qrElementHTML}
+                            </div>
+                        </div>
+                    `;
+
+                    // Si NO usa foto de la galería, se crea el QR limpio en el canvas
+                    if (!usuario.usar_foto_qr) {
+                        new QRious({
+                            element: document.getElementById('qr'),
+                            value: usuario.qr_pure,
+                            size: 220,
+                            level: 'M'
+                        });
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('app').innerHTML = '<div class="error-msg">❌ Error al cargar la base de datos.</div>';
+                    console.error(err);
+                });
+        }
+    </script>
+</body>
+</html>
