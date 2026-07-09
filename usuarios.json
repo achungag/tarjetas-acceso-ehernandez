@@ -7,7 +7,7 @@
     "areas_practica": ["EJEMPLO-1"],
     "email": "daveluna@ehernandez.com.pe",
     "foto": "dave-perfil.jpg",
-    "logo": "logo1.png",
+    "logo": "logo1.jpeg",
     "qr_pure": "QTIyMEI1OTkwNzAwMkMwMTAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDI2OTkyNUIwMDAwMDAwMDY5QUY2M0JDMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMA==",
     "usar_foto_qr": false
   },
@@ -19,8 +19,8 @@
     "areas_practica": ["EJEMPLO-2"],
     "email": "daveluna@ehernandez.com.pe",
     "foto": "dave-perfil.jpg",
-    "logo": "logo2.jpeg",
-    "qr_pure": "qr-galeria.jpg",
+    "logo": "logo2.png",
+    "qr_pure": "dave-qr.jpg",
     "usar_foto_qr": true
   }
 ]
