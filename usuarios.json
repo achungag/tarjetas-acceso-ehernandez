@@ -34,8 +34,18 @@
     "email": "daveluna@ehernandez.com.pe",
     "foto": "dave-perfil.jpg",
     "logo": "logo2.png",
-    "layout": "por-fuera",
     "qr_pure": "dave-qr2.jpg",
     "usar_foto_qr": true
   }
-]
+  {
+    "id": 501,
+    "nombre": "Rodrigo",
+    "apellido": "Flores",
+    "rol": "SOCIO",
+    "areas_practica": ["EJEMPLO-4"],
+    "email": "rflores@ehernandez.com.pe",
+    "logo": "logo2.png",
+    "qr_pure": "rflores-qr.jpg",
+    "usar_foto_qr": true
+  },
+  ]
