@@ -47,5 +47,16 @@
     "logo": "logo2.png",
     "qr_pure": "rflores-qr.jpg",
     "usar_foto_qr": true
+  },
+    {
+    "id": 700,
+    "nombre": "Prueba",
+    "apellido": "Prueba",
+    "rol": "SOCIO",
+    "areas_practica": ["EJEMPLO-5"],
+    "email": "rflores@ehernandez.com.pe",
+    "logo": "logo2.png",
+    "qr_pure": "rflores-qr.jpg",
+    "usar_foto_qr": true
   }
   ]
