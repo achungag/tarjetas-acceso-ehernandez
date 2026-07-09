@@ -5,23 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HCIA - Tarjeta de Ingreso</title>
     
-    <!-- Icono para Computadoras y pestañas del navegador (Favicon) -->
-    <link rel="shortcut icon" href="logo1_2.jpeg">
+    <link rel="shortcut icon" href="logo1.jpeg">
 
-    <!-- FIJADO PARA IPHONE: Obliga a Safari a usar el logo en el escritorio en vez de una captura -->
-    <link rel="apple-touch-icon" href="logo1_2.jpeg">
-    <link rel="apple-touch-icon" sizes="152x152" href="logo1_2.jpeg">
-    <link rel="apple-touch-icon" sizes="180x180" href="logo1_2.jpeg">
+    <link rel="apple-touch-icon" href="logo1.jpeg">
+    <link rel="apple-touch-icon" sizes="152x152" href="logo1.jpeg">
+    <link rel="apple-touch-icon" sizes="180x180" href="logo1.jpeg">
 
-    <!-- FIJADO PARA ANDROID NATIVO: Obliga a Chrome a jalar el logo en alta resolución -->
-    <link rel="icon" type="image/jpeg" sizes="192x192" href="logo1_2.jpeg">
-    <link rel="icon" type="image/jpeg" sizes="512x512" href="logo1_2.jpeg">
+    <link rel="icon" type="image/jpeg" sizes="192x192" href="logo1.jpeg">
+    <link ... type="image/jpeg" sizes="512x512" href="logo1.jpeg">
     
-    <!-- Configuración extra para mejorar la integración móvil nativa -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="HCIA Ingreso">
 
-    <!-- Librería para generar los QR limpios desde el Base64 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
         body {
@@ -34,7 +29,7 @@
         }
         .wrapper {
             width: 95%; 
-            max-width: 380px; /* Tarjeta un poco más grande para mejor visualización */
+            max-width: 380px; /* Tarjeta un poco más grande para mejor presencia */
             display: flex; flex-direction: column; align-items: center;
             padding-top: 6vh; /* Reduce el espacio vacío de arriba a la mitad de forma estética */
             padding-bottom: 30px;
@@ -96,6 +91,7 @@
         if (!userId) {
             document.getElementById('wrapper').innerHTML = '<div class="error-msg">❌ Error: Especifica un usuario en la URL (?user=0, ?user=500, etc.)</div>';
         } else {
+            // CORRECCIÓN: Apuntando exactamente a usuarios.json original
             fetch('usuarios.json')
                 .then(response => response.json())
                 .then(usuarios => {
