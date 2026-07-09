@@ -13,115 +13,79 @@
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh;
         }
-        .card {
-            background-color: #2e7d32; /* El verde corporativo */
-            color: white;
+        /* Contenedor principal para cuando el logo está por fuera */
+        .wrapper {
             width: 95%; max-width: 360px;
-            border-radius: 16px; padding: 25px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .card {
+            background-color: #2e7d32; color: white;
+            width: 100%; border-radius: 16px; padding: 25px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             box-sizing: border-box;
         }
-        /* DISEÑO BASE: Horizontal (Para usuario 0 y otros con logos cuadrados) */
-        .company-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 30px;
+        
+        /* 1. LAYOUT: Horizontal (Por defecto) */
+        .company-header.horizontal {
+            display: flex; align-items: center; gap: 12px; margin-bottom: 30px;
         }
-        /* DISEÑO EXCLUSIVO USER 500: Vertical/Stacked */
-        .company-header.stacked {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 25px;
+        .company-header.horizontal .logo-empresa {
+            height: 26px; max-width: 110px; object-fit: contain;
+            background-color: white; padding: 3px 6px; border-radius: 4px;
         }
-        .logo-empresa {
-            height: 26px;
-            max-width: 110px;
-            object-fit: contain;
-            background-color: white;
-            padding: 3px 6px;
-            border-radius: 4px;
+
+        /* 2. LAYOUT: Centrado Interno (User 500 y 502) */
+        .company-header.centrado-interno {
+            display: flex; flex-direction: column; align-items: center;
+            gap: 12px; margin-bottom: 25px; text-align: center; width: 100%;
         }
-        /* MODIFICACIÓN: Logo transparente y sin recuadro blanco para el usuario 500 */
-        .logo-empresa.rectangular {
-            height: 38px;
-            max-width: 180px;
-            width: auto;
-            background-color: transparent; /* Remueve el fondo blanco */
-            padding: 0; /* Remueve el recuadro interno */
-            border-radius: 0;
+        .company-header.centrado-interno .logo-empresa {
+            width: 90%; max-width: 280px; height: auto;
+            object-fit: contain; background-color: transparent; padding: 0;
         }
-        .company-name {
-            font-size: 19px;
-            font-weight: bold;
-            letter-spacing: 0.3px;
+
+        /* 3. LAYOUT: Por fuera (User 501) */
+        .logo-fuera {
+            width: 75%; max-width: 240px; height: auto;
+            object-fit: contain; margin-bottom: 20px;
         }
-        /* Datos a la izquierda y foto de perfil a la derecha */
+        
+        /* Estilos comunes de texto corporativo */
+        .company-name { font-size: 19px; font-weight: bold; letter-spacing: 0.3px; }
+        .company-name.centered { text-align: center; width: 100%; }
+
+        /* Bloque de usuario */
         .user-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            gap: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 25px; gap: 15px;
         }
-        .user-info {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-        .cargo {
-            font-size: 11px;
-            text-transform: uppercase;
-            color: #a5d6a7;
-            font-weight: 600;
-            letter-spacing: 0.8px;
-        }
-        .nombre {
-            font-size: 26px;
-            font-weight: bold;
-            margin: 4px 0 0 0;
-            line-height: 1.2;
-        }
-        .profile-pic {
-            width: 85px;
-            height: 85px;
-            border-radius: 8px;
-            object-fit: cover;
-            background-color: #fff;
-            flex-shrink: 0;
-        }
-        /* Campos de texto inferiores */
-        .label { 
-            font-size: 10px; 
-            text-transform: uppercase; 
-            color: #a5d6a7; 
-            margin-bottom: 2px; 
-            letter-spacing: 1px; 
-        }
+        .user-info { display: flex; flex-direction: column; flex: 1; }
+        .cargo { font-size: 11px; text-transform: uppercase; color: #a5d6a7; font-weight: 600; letter-spacing: 0.8px; }
+        .nombre { font-size: 26px; font-weight: bold; margin: 4px 0 0 0; line-height: 1.2; }
+        .profile-pic { width: 85px; height: 85px; border-radius: 8px; object-fit: cover; background-color: #fff; flex-shrink: 0; }
+        
+        .label { font-size: 10px; text-transform: uppercase; color: #a5d6a7; margin-bottom: 2px; letter-spacing: 1px; }
         .info-group { margin-bottom: 15px; }
         .info-value { font-size: 14px; letter-spacing: 0.3px; word-break: break-all; }
         
-        /* Contenedor blanco para el QR */
         .qr-container {
-            background-color: white; padding: 15px;
-            border-radius: 12px; margin-top: 25px;
+            background-color: white; padding: 15px; border-radius: 12px; margin-top: 25px;
             display: flex; justify-content: center; align-items: center;
         }
         .qr-container img, .qr-container canvas { width: 210px; height: 210px; object-fit: contain; }
-        .error-msg { color: #ff5252; background: white; padding: 20px; border-radius: 10px; text-align: center; }
+        .error-msg { color: #ff5252; background: white; padding: 20px; border-radius: 10px; text-align: center; width: 100%; box-sizing: border-box;}
     </style>
 </head>
 <body>
 
-    <div id="app">Cargando credencial...</div>
+    <div id="wrapper" class="wrapper">Cargando credencial...</div>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const userId = urlParams.get('user');
 
         if (!userId) {
-            document.getElementById('app').innerHTML = '<div class="error-msg">❌ Error: Especifica un usuario en la URL (?user=0 o ?user=500)</div>';
+            document.getElementById('wrapper').innerHTML = '<div class="error-msg">❌ Error: Especifica un usuario en la URL (?user=0, ?user=500, ?user=501)</div>';
         } else {
             fetch('usuarios.json')
                 .then(response => response.json())
@@ -129,22 +93,34 @@
                     const usuario = usuarios.find(u => u.id.toString() === userId);
 
                     if (!usuario) {
-                        document.getElementById('app').innerHTML = '<div class="error-msg">❌ Usuario no encontrado en el sistema.</div>';
+                        document.getElementById('wrapper').innerHTML = '<div class="error-msg">❌ Usuario no encontrado en el sistema.</div>';
                         return;
                     }
 
-                    // Cabecera Dinámica
+                    // Renderizar la cabecera e imágenes según la propiedad "layout"
                     let cabeceraHTML = '';
-                    if (usuario.id.toString() === '500') {
+                    let logoFueraHTML = '';
+
+                    if (usuario.layout === 'por-fuera') {
+                        // ID 501: Logo flotando arriba afuera de la tarjeta verde
+                        logoFueraHTML = `<img class="logo-fuera" src="${usuario.logo}" alt="Logo">`;
                         cabeceraHTML = `
-                            <div class="company-header stacked">
-                                <img class="logo-empresa rectangular" src="${usuario.logo}" alt="Logo">
-                                <div class="company-name">Estudio Hernández</div>
+                            <div class="company-header centrado-interno">
+                                <div class="company-name centered">Estudio Hernández</div>
+                            </div>
+                        `;
+                    } else if (usuario.layout === 'centrado-interno') {
+                        // ID 500 y 502: Logo grande de extremo a extremo centrado por dentro
+                        cabeceraHTML = `
+                            <div class="company-header centrado-interno">
+                                <img class="logo-empresa" src="${usuario.logo}" alt="Logo">
+                                <div class="company-name centered">Estudio Hernández</div>
                             </div>
                         `;
                     } else {
+                        // ID 0 y por defecto: Diseño horizontal de esquina
                         cabeceraHTML = `
-                            <div class="company-header">
+                            <div class="company-header horizontal">
                                 <img class="logo-empresa" src="${usuario.logo}" alt="Logo">
                                 <div class="company-name">Estudio Hernández</div>
                             </div>
@@ -155,7 +131,9 @@
                         ? `<img src="${usuario.qr_pure}" alt="Código QR">` 
                         : `<canvas id="qr"></canvas>`;
 
-                    document.getElementById('app').innerHTML = `
+                    // Inyectar estructura completa en el Wrapper principal
+                    document.getElementById('wrapper').innerHTML = `
+                        ${logoFueraHTML}
                         <div class="card">
                             ${cabeceraHTML}
                             
@@ -188,7 +166,7 @@
                     }
                 })
                 .catch(err => {
-                    document.getElementById('app').innerHTML = '<div class="error-msg">❌ Error al cargar la base de datos.</div>';
+                    document.getElementById('wrapper').innerHTML = '<div class="error-msg">❌ Error al cargar la base de datos.</div>';
                     console.error(err);
                 });
         }
