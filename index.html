@@ -13,19 +13,19 @@
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh;
         }
-        /* Contenedor principal para cuando el logo está por fuera */
         .wrapper {
             width: 95%; max-width: 360px;
             display: flex; flex-direction: column; align-items: center;
         }
         .card {
-            background-color: #2e7d32; color: white;
+            background-color: #2e7d32; /* El verde corporativo */
+            color: white;
             width: 100%; border-radius: 16px; padding: 25px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             box-sizing: border-box;
         }
         
-        /* 1. LAYOUT: Horizontal (Por defecto) */
+        /* 1. LAYOUT: Horizontal (ID 0) */
         .company-header.horizontal {
             display: flex; align-items: center; gap: 12px; margin-bottom: 30px;
         }
@@ -34,27 +34,35 @@
             background-color: white; padding: 3px 6px; border-radius: 4px;
         }
 
-        /* 2. LAYOUT: Centrado Interno (User 500 y 502) */
+        /* 2. LAYOUT OPTIMIZADO: Centrado Interno (ID 500 y 502) - Sin espacios vacíos */
         .company-header.centrado-interno {
             display: flex; flex-direction: column; align-items: center;
-            gap: 12px; margin-bottom: 25px; text-align: center; width: 100%;
+            gap: 4px; /* Reduce espacio entre el logo y el texto inferior */
+            margin-top: -10px; /* Elimina espacio superior tachado */
+            margin-bottom: 18px; /* Reduce espacio inferior tachado */
+            text-align: center; width: 100%;
         }
         .company-header.centrado-interno .logo-empresa {
-            width: 90%; max-width: 280px; height: auto;
+            width: 85%; max-width: 250px; height: auto;
             object-fit: contain; background-color: transparent; padding: 0;
         }
 
-        /* 3. LAYOUT: Por fuera (User 501) */
-        .logo-fuera {
-            width: 75%; max-width: 240px; height: auto;
-            object-fit: contain; margin-bottom: 20px;
+        /* 3. LAYOUT: Superior Extendido Blanco (ID 501) */
+        .company-header.superior-extendido {
+            display: flex; flex-direction: column; align-items: center;
+            gap: 14px; margin-bottom: 30px; text-align: center; width: 100%;
+        }
+        .company-header.superior-extendido .logo-empresa {
+            width: 95%; max-width: 290px; height: auto;
+            object-fit: contain; background-color: transparent; padding: 0;
+            filter: brightness(0) invert(1); /* Pone el logo negro en blanco puro */
         }
         
-        /* Estilos comunes de texto corporativo */
+        /* Estilos comunes */
         .company-name { font-size: 19px; font-weight: bold; letter-spacing: 0.3px; }
         .company-name.centered { text-align: center; width: 100%; }
 
-        /* Bloque de usuario */
+        /* Bloque del Empleado */
         .user-row {
             display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 25px; gap: 15px;
@@ -90,27 +98,24 @@
             fetch('usuarios.json')
                 .then(response => response.json())
                 .then(usuarios => {
-                    const usuario = usuarios.find(u => u.id.toString() === userId);
+                    const usuario = MapUsuario(usuarios, userId);
 
                     if (!usuario) {
                         document.getElementById('wrapper').innerHTML = '<div class="error-msg">❌ Usuario no encontrado en el sistema.</div>';
                         return;
                     }
 
-                    // Renderizar la cabecera e imágenes según la propiedad "layout"
+                    // Enrutar diseño de cabecera según el campo layout del JSON
                     let cabeceraHTML = '';
-                    let logoFueraHTML = '';
 
                     if (usuario.layout === 'por-fuera') {
-                        // ID 501: Logo flotando arriba afuera de la tarjeta verde
-                        logoFueraHTML = `<img class="logo-fuera" src="${usuario.logo}" alt="Logo">`;
                         cabeceraHTML = `
-                            <div class="company-header centrado-interno">
+                            <div class="company-header superior-extendido">
+                                <img class="logo-empresa" src="${usuario.logo}" alt="Logo">
                                 <div class="company-name centered">Estudio Hernández</div>
                             </div>
                         `;
                     } else if (usuario.layout === 'centrado-interno') {
-                        // ID 500 y 502: Logo grande de extremo a extremo centrado por dentro
                         cabeceraHTML = `
                             <div class="company-header centrado-interno">
                                 <img class="logo-empresa" src="${usuario.logo}" alt="Logo">
@@ -118,7 +123,6 @@
                             </div>
                         `;
                     } else {
-                        // ID 0 y por defecto: Diseño horizontal de esquina
                         cabeceraHTML = `
                             <div class="company-header horizontal">
                                 <img class="logo-empresa" src="${usuario.logo}" alt="Logo">
@@ -131,9 +135,7 @@
                         ? `<img src="${usuario.qr_pure}" alt="Código QR">` 
                         : `<canvas id="qr"></canvas>`;
 
-                    // Inyectar estructura completa en el Wrapper principal
                     document.getElementById('wrapper').innerHTML = `
-                        ${logoFueraHTML}
                         <div class="card">
                             ${cabeceraHTML}
                             
@@ -169,6 +171,11 @@
                     document.getElementById('wrapper').innerHTML = '<div class="error-msg">❌ Error al cargar la base de datos.</div>';
                     console.error(err);
                 });
+        }
+
+        // Función auxiliar de mapeo para asegurar compatibilidad de IDs numéricos/strings
+        function MapUsuario(lista, idBuscar) {
+            return lista.find(u => u.id.toString() === idBuscar);
         }
     </script>
 </body>
