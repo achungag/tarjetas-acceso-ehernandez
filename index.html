@@ -34,35 +34,31 @@
             background-color: white; padding: 3px 6px; border-radius: 4px;
         }
 
-        /* 2. LAYOUT OPTIMIZADO: Centrado Interno (ID 500 y 502) - Sin espacios vacíos */
+        /* 2. LAYOUT COMPACTO: Centrado Interno (ID 500 y 502) - Sin espacios vacíos */
         .company-header.centrado-interno {
             display: flex; flex-direction: column; align-items: center;
-            gap: 4px; /* Reduce espacio entre el logo y el texto inferior */
-            margin-top: -10px; /* Elimina espacio superior tachado */
-            margin-bottom: 18px; /* Reduce espacio inferior tachado */
+            gap: 6px; 
+            margin-top: -5px; /* Elimina aire superior */
+            margin-bottom: 15px; /* Elimina aire inferior */
             text-align: center; width: 100%;
         }
         .company-header.centrado-interno .logo-empresa {
-            width: 85%; max-width: 250px; height: auto;
+            width: 85%; max-width: 240px; height: auto;
             object-fit: contain; background-color: transparent; padding: 0;
         }
 
-        /* 3. LAYOUT: Superior Extendido Blanco (ID 501) */
-        .company-header.superior-extendido {
-            display: flex; flex-direction: column; align-items: center;
-            gap: 14px; margin-bottom: 30px; text-align: center; width: 100%;
-        }
-        .company-header.superior-extendido .logo-empresa {
-            width: 95%; max-width: 290px; height: auto;
-            object-fit: contain; background-color: transparent; padding: 0;
-            filter: brightness(0) invert(1); /* Pone el logo negro en blanco puro */
+        /* 3. LAYOUT: Por fuera y arriba de la tarjeta (ID 501) */
+        .logo-fuera {
+            width: 85%; max-width: 250px; height: auto;
+            object-fit: contain; 
+            margin-bottom: 20px; /* Separación estética antes de que empiece la tarjeta verde */
         }
         
         /* Estilos comunes */
         .company-name { font-size: 19px; font-weight: bold; letter-spacing: 0.3px; }
         .company-name.centered { text-align: center; width: 100%; }
 
-        /* Bloque del Empleado */
+        /* Bloque de usuario */
         .user-row {
             display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 25px; gap: 15px;
@@ -98,24 +94,27 @@
             fetch('usuarios.json')
                 .then(response => response.json())
                 .then(usuarios => {
-                    const usuario = MapUsuario(usuarios, userId);
+                    const usuario = usuarios.find(u => u.id.toString() === userId);
 
                     if (!usuario) {
                         document.getElementById('wrapper').innerHTML = '<div class="error-msg">❌ Usuario no encontrado en el sistema.</div>';
                         return;
                     }
 
-                    // Enrutar diseño de cabecera según el campo layout del JSON
                     let cabeceraHTML = '';
+                    let logoFueraHTML = '';
 
+                    // Lógica de ruteo limpia para las ubicaciones físicas del logo
                     if (usuario.layout === 'por-fuera') {
+                        // ID 501: El logo original se pinta AFUERA y ARRIBA de la tarjeta verde
+                        logoFueraHTML = `<img class="logo-fuera" src="${usuario.logo}" alt="Logo">`;
                         cabeceraHTML = `
-                            <div class="company-header superior-extendido">
-                                <img class="logo-empresa" src="${usuario.logo}" alt="Logo">
+                            <div class="company-header centrado-interno">
                                 <div class="company-name centered">Estudio Hernández</div>
                             </div>
                         `;
                     } else if (usuario.layout === 'centrado-interno') {
+                        // ID 500 y 502: Logo original adentro, centrado y sin espacios gigantes
                         cabeceraHTML = `
                             <div class="company-header centrado-interno">
                                 <img class="logo-empresa" src="${usuario.logo}" alt="Logo">
@@ -123,6 +122,7 @@
                             </div>
                         `;
                     } else {
+                        // ID 0: Diseño clásico horizontal de esquina
                         cabeceraHTML = `
                             <div class="company-header horizontal">
                                 <img class="logo-empresa" src="${usuario.logo}" alt="Logo">
@@ -135,7 +135,9 @@
                         ? `<img src="${usuario.qr_pure}" alt="Código QR">` 
                         : `<canvas id="qr"></canvas>`;
 
+                    // Estructura limpia y simétrica
                     document.getElementById('wrapper').innerHTML = `
+                        ${logoFueraHTML}
                         <div class="card">
                             ${cabeceraHTML}
                             
@@ -171,11 +173,6 @@
                     document.getElementById('wrapper').innerHTML = '<div class="error-msg">❌ Error al cargar la base de datos.</div>';
                     console.error(err);
                 });
-        }
-
-        // Función auxiliar de mapeo para asegurar compatibilidad de IDs numéricos/strings
-        function MapUsuario(lista, idBuscar) {
-            return lista.find(u => u.id.toString() === idBuscar);
         }
     </script>
 </body>
