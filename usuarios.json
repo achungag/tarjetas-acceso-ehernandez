@@ -22,8 +22,8 @@
     "foto": "dave-perfil.jpg",
     "logo": "logo2.png",
     "layout": "centrado-interno",
-    "qr_pure": "QTIyMEI1OTkwNzAwMkMwMTAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDI2OTkyNUIwMDAwMDAwMDY5QUY2M0JDMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMA==",
-    "usar_foto_qr": false
+    "qr_pure": "dave-qr3.jpg",
+    "usar_foto_qr": true
   },
   {
     "id": 501,
