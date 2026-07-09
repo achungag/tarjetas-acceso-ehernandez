@@ -4,137 +4,154 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HCIA - Tarjeta de Ingreso</title>
-    <link rel="shortcut icon" href="logo1.jpeg">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    
+    <!-- Icono para Computadoras y pestañas del navegador (Favicon) -->
+    <link rel="shortcut icon" href="logo1.jpeg">[cite: 3]
+
+    <!-- FIJADO PARA IPHONE: Obliga a Safari a usar el logo en el escritorio en vez de una captura -->
+    <link rel="apple-touch-icon" href="logo1.jpeg">
+    <link rel="apple-touch-icon" sizes="152x152" href="logo1.jpeg">
+    <link rel="apple-touch-icon" sizes="180x180" href="logo1.jpeg">
+
+    <!-- FIJADO PARA ANDROID NATIVO: Obliga a Chrome a jalar el logo en alta resolución -->
+    <link rel="icon" type="image/jpeg" sizes="192x192" href="logo1.jpeg">
+    <link rel="icon" type="image/jpeg" sizes="512x512" href="logo1.jpeg">
+    
+    <!-- Configuración extra para mejorar la integración móvil nativa -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="HCIA Ingreso">
+
+    <!-- Librería para generar los QR limpios desde el Base64 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>[cite: 3]
     <style>
         body {
-            margin: 0; padding: 0;
-            background-color: #f0f2f5;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            display: flex; justify-content: center; 
-            align-items: flex-start; /* CORRECCIÓN: Alinea al inicio para controlar el espacio superior */
-            min-height: 100vh;
+            margin: 0; padding: 0;[cite: 3]
+            background-color: #f0f2f5;[cite: 3]
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;[cite: 3]
+            display: flex; justify-content: center; [cite: 3]
+            align-items: flex-start; /* CORRECCIÓN: Alinea al inicio para controlar el espacio superior */[cite: 3]
+            min-height: 100vh;[cite: 3]
         }
         .wrapper {
-            width: 95%; 
-            max-width: 380px; /* MODIFICACIÓN: Tarjeta un poco más grande (Antes 360px) */
-            display: flex; flex-direction: column; align-items: center;
-            padding-top: 6vh; /* CORRECCIÓN: Reduce el espacio vacío de arriba a la mitad de forma estética */
-            padding-bottom: 30px;
-            box-sizing: border-box;
+            width: 95%; [cite: 3]
+            max-width: 380px; /* MODIFICACIÓN: Tarjeta un poco más grande (Antes 360px) */[cite: 3]
+            display: flex; flex-direction: column; align-items: center;[cite: 3]
+            padding-top: 6vh; /* CORRECCIÓN: Reduce el espacio vacío de arriba a la mitad de forma estética */[cite: 3]
+            padding-bottom: 30px;[cite: 3]
+            box-sizing: border-box;[cite: 3]
         }
         .card {
-            background-color: #1a665e; /* Color Fondo Tarjeta */
-            color: white;
-            width: 100%; border-radius: 16px; padding: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            box-sizing: border-box;
+            background-color: #1a665e; /* Color Fondo Tarjeta */[cite: 3]
+            color: white;[cite: 3]
+            width: 100%; border-radius: 16px; padding: 25px;[cite: 3]
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);[cite: 3]
+            box-sizing: border-box;[cite: 3]
         }
         
         /* 1. LAYOUT: Horizontal (ID 0) */
         .company-header.horizontal {
-            display: flex; align-items: center; gap: 12px; margin-bottom: 30px;
+            display: flex; align-items: center; gap: 12px; margin-bottom: 30px;[cite: 3]
         }
         .company-header.horizontal .logo-empresa {
-            height: 26px; max-width: 110px; object-fit: contain;
-            background-color: white; padding: 3px 6px; border-radius: 4px;
+            height: 26px; max-width: 110px; object-fit: contain;[cite: 3]
+            background-color: white; padding: 3px 6px; border-radius: 4px;[cite: 3]
         }
 
         /* 2. LAYOUT COMPACTO: Centrado Interno (ID 500) */
         .company-header.centrado-interno {
-            display: flex; flex-direction: column; align-items: center;
-            gap: 6px; margin-top: -5px; margin-bottom: 15px;
-            text-align: center; width: 100%;
+            display: flex; flex-direction: column; align-items: center;[cite: 3]
+            gap: 6px; margin-top: -5px; margin-bottom: 15px;[cite: 3]
+            text-align: center; width: 100%;[cite: 3]
         }
         .company-header.centrado-interno .logo-empresa {
-            width: 85%; max-width: 240px; height: auto;
-            object-fit: contain; background-color: transparent; padding: 0;
+            width: 85%; max-width: 240px; height: auto;[cite: 3]
+            object-fit: contain; background-color: transparent; padding: 0;[cite: 3]
         }
 
         /* 3. LAYOUT: Por fuera y arriba de la tarjeta (ID 501) */
         .logo-fuera {
-            width: 85%; max-width: 260px; height: auto;
-            object-fit: contain; 
-            margin-bottom: 18px; /* Separación equilibrada antes de la tarjeta */
+            width: 85%; max-width: 260px; height: auto;[cite: 3]
+            object-fit: contain; [cite: 3]
+            margin-bottom: 18px; /* Separación equilibrada antes de la tarjeta */[cite: 3]
         }
         
         /* Estilos comunes */
-        .company-name { font-size: 19px; font-weight: bold; letter-spacing: 0.3px; }
-        .company-name.centered { text-align: center; width: 100%; }
+        .company-name { font-size: 19px; font-weight: bold; letter-spacing: 0.3px; }[cite: 3]
+        .company-name.centered { text-align: center; width: 100%; }[cite: 3]
 
         /* Bloque de usuario */
         .user-row {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 25px; gap: 15px;
+            display: flex; justify-content: space-between; align-items: center;[cite: 3]
+            margin-bottom: 25px; gap: 15px;[cite: 3]
         }
-        .user-info { display: flex; flex-direction: column; flex: 1; }
-        .cargo { font-size: 11px; text-transform: uppercase; color: #a5d6a7; font-weight: 600; letter-spacing: 0.8px; }
-        .nombre { font-size: 26px; font-weight: bold; margin: 4px 0 0 0; line-height: 1.2; }
-        .profile-pic { width: 85px; height: 85px; border-radius: 8px; object-fit: cover; background-color: #fff; flex-shrink: 0; }
+        .user-info { display: flex; flex-direction: column; flex: 1; }[cite: 3]
+        .cargo { font-size: 11px; text-transform: uppercase; color: #a5d6a7; font-weight: 600; letter-spacing: 0.8px; }[cite: 3]
+        .nombre { font-size: 26px; font-weight: bold; margin: 4px 0 0 0; line-height: 1.2; }[cite: 3]
+        .profile-pic { width: 85px; height: 85px; border-radius: 8px; object-fit: cover; background-color: #fff; flex-shrink: 0; }[cite: 3]
         
-        .label { font-size: 10px; text-transform: uppercase; color: #a5d6a7; margin-bottom: 2px; letter-spacing: 1px; }
-        .info-group { margin-bottom: 15px; }
-        .info-value { font-size: 14px; letter-spacing: 0.3px; word-break: break-all; }
+        .label { font-size: 10px; text-transform: uppercase; color: #a5d6a7; margin-bottom: 2px; letter-spacing: 1px; }[cite: 3]
+        .info-group { margin-bottom: 15px; }[cite: 3]
+        .info-value { font-size: 14px; letter-spacing: 0.3px; word-break: break-all; }[cite: 3]
         
         .qr-container {
-            background-color: white; padding: 15px; border-radius: 12px; margin-top: 25px;
-            display: flex; justify-content: center; align-items: center;
+            background-color: white; padding: 15px; border-radius: 12px; margin-top: 25px;[cite: 3]
+            display: flex; justify-content: center; align-items: center;[cite: 3]
         }
         /* MODIFICACIÓN: QR un poco más grande en CSS (Antes 210px) */
-        .qr-container img, .qr-container canvas { width: 230px; height: 230px; object-fit: contain; }
-        .error-msg { color: #ff5252; background: white; padding: 20px; border-radius: 10px; text-align: center; width: 100%; box-sizing: border-box;}
+        .qr-container img, .qr-container canvas { width: 230px; height: 230px; object-fit: contain; }[cite: 3]
+        .error-msg { color: #ff5252; background: white; padding: 20px; border-radius: 10px; text-align: center; width: 100%; box-sizing: border-box;}[cite: 3]
     </style>
 </head>
 <body>
 
-    <div id="wrapper" class="wrapper">Cargando credencial...</div>
+    <div id="wrapper" class="wrapper">Cargando credencial...</div>[cite: 3]
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const userId = urlParams.get('user');
+        const urlParams = new URLSearchParams(window.location.search);[cite: 3]
+        const userId = urlParams.get('user');[cite: 3]
 
         if (!userId) {
-            document.getElementById('wrapper').innerHTML = '<div class="error-msg">❌ Error: Especifica un usuario en la URL (?user=0, ?user=500, ?user=501)</div>';
+            document.getElementById('wrapper').innerHTML = '<div class="error-msg">❌ Error: Especifica un usuario en la URL (?user=0, ?user=500, ?user=501)</div>';[cite: 3]
         } else {
-            fetch('usuarios.json')
-                .then(response => response.json())
+            fetch('usuarios.json')[cite: 3]
+                .then(response => response.json())[cite: 3]
                 .then(usuarios => {
-                    const usuario = usuarios.find(u => u.id.toString() === userId);
+                    const usuario = usuarios.find(u => u.id.toString() === userId);[cite: 3]
 
                     if (!usuario) {
-                        document.getElementById('wrapper').innerHTML = '<div class="error-msg">❌ Usuario no encontrado en el sistema.</div>';
+                        document.getElementById('wrapper').innerHTML = '<div class="error-msg">❌ Usuario no encontrado en el sistema.</div>';[cite: 3]
                         return;
                     }
 
-                    let cabeceraHTML = '';
-                    let logoFueraHTML = '';
+                    let cabeceraHTML = '';[cite: 3]
+                    let logoFueraHTML = '';[cite: 3]
 
                     if (usuario.layout === 'por-fuera') {
-                        logoFueraHTML = `<img class="logo-fuera" src="${usuario.logo}" alt="Logo">`;
+                        logoFueraHTML = `<img class="logo-fuera" src="${usuario.logo}" alt="Logo">`;[cite: 3]
                         cabeceraHTML = `
                             <div class="company-header centrado-interno">
                                <div class="company-name centered">TARJETA DE INGRESO</div>
                             </div>
-                        `;
+                        `;[cite: 3]
                     } else if (usuario.layout === 'centrado-interno') {
                         cabeceraHTML = `
                             <div class="company-header centrado-interno">
                                <img class="logo-empresa" src="${usuario.logo}" alt="Logo">
                                 <div class="company-name centered">TARJETA DE INGRESO</div>
                             </div>
-                        `;
+                        `;[cite: 3]
                     } else {
                         cabeceraHTML = `
                             <div class="company-header horizontal">
                               <img class="logo-empresa" src="${usuario.logo}" alt="Logo">
                                 <div class="company-name">TARJETA DE INGRESO</div>
                             </div>
-                        `;
+                        `;[cite: 3]
                     }
 
                     let qrElementHTML = usuario.usar_foto_qr 
                         ? `<img src="${usuario.qr_pure}" alt="Código QR">` 
-                        : `<canvas id="qr"></canvas>`;
+                        : `<canvas id="qr"></canvas>`;[cite: 3]
 
                     document.getElementById('wrapper').innerHTML = `
                         ${logoFueraHTML}
@@ -157,20 +174,20 @@
                                 ${qrElementHTML}
                             </div>
                         </div>
-                    `;
+                    `;[cite: 3]
 
                     if (!usuario.usar_foto_qr) {
                         new QRious({
-                            element: document.getElementById('qr'),
-                            value: usuario.qr_pure,
-                            size: 230, // MODIFICACIÓN: QR un poco más grande en la librería (Antes 210)
-                            level: 'M'
+                            element: document.getElementById('qr'),[cite: 3]
+                            value: usuario.qr_pure,[cite: 3]
+                            size: 230, // MODIFICACIÓN: QR un poco más grande en la librería (Antes 210)[cite: 3]
+                            level: 'M'[cite: 3]
                         });
                     }
                 })
                 .catch(err => {
-                    document.getElementById('wrapper').innerHTML = '<div class="error-msg">❌ Error al cargar la base de datos.</div>';
-                    console.error(err);
+                    document.getElementById('wrapper').innerHTML = '<div class="error-msg">❌ Error al cargar la base de datos.</div>';[cite: 3]
+                    console.error(err);[cite: 3]
                 });
         }
     </script>
