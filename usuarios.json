@@ -58,7 +58,7 @@
     "logo": "logo2.png",
     "qr_pure": "rflores-qr.jpg",
     "usar_foto_qr": true
-  }
+  },
       {
     "id": 900,
     "nombre": "Diana",
@@ -67,7 +67,7 @@
     "areas_practica": ["Administración"],
     "email": "dzolla@ehernandez.com.pe",
     "logo": "logo2.png",
-    "qr_pure": "DIANA ZOLLA.png",
+    "qr_pure": "dianazolla.jpg",
     "usar_foto_qr": true
   }
   ]
