@@ -59,4 +59,15 @@
     "qr_pure": "rflores-qr.jpg",
     "usar_foto_qr": true
   }
+      {
+    "id": 900,
+    "nombre": "Diana",
+    "apellido": "Zolla",
+    "rol": "Asistente Ejecutiva",
+    "areas_practica": ["Administración"],
+    "email": "dzolla@ehernandez.com.pe",
+    "logo": "logo2.png",
+    "qr_pure": "DIANA ZOLLA.png",
+    "usar_foto_qr": true
+  }
   ]
